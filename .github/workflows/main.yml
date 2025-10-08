@@ -14,8 +14,8 @@ jobs:
       - name: Send Inline Telegram Message
         uses: cbrgm/telegram-github-action@v1
         with:
-          token: ${{8205303925:AAGtxnGCAMqcsz4fJiUnMT_CIHzUocR3Zuo }}
-          to: ${{-1003172903974/110}}
+          token: '${{ secrets.8205303925:AAGtxnGCAMqcsz4fJiUnMT_CIHzUocR3Zuo }}'
+          to: '${{ secrets.-1003172903974/110}}'
           message: |
             🚀 New Release Published!
             Release Name: ${{ github.event.release.name }}
