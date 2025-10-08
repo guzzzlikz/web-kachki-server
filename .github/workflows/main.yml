@@ -18,9 +18,9 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           thread-id: ${{ secrets.TELEGRAM_THREAD_ID }}
           message: |
-            🚀 New push to master branch!
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
-            Repo: ${{ github.repository }}
-            Message: ${{ github.event.head_commit.message }}
+            🚀 Якийсь хуєсос запушив в мастєр блять!
+            Коміт: ${{ github.sha }}
+            Хто: ${{ github.actor }}
+            Репозиторій: ${{ github.repository }}
+            Чо написав підор: ${{ github.event.head_commit.message }}
             🔗 https://github.com/${{ github.repository }}/commit/${{ github.sha }}
