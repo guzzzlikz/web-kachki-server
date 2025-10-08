@@ -16,6 +16,7 @@ jobs:
         with:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          thread-id: ${{ secrets.TELEGRAM_THREAD_ID }}
           message: |
             🚀 New push to master branch!
             Commit: ${{ github.sha }}
