@@ -2,7 +2,7 @@ name: Inline Message Workflow
 
 on:
   commit:
-    branches: [master]
+    branches: [master]p
 
 jobs:
   send-inline-message:
