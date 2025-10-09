@@ -1,5 +1,12 @@
 package org.example.webkachkiserver.models.user;
 
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="user")
+@Builder
+@Data
 public class User {
     private String id;
     private String name;
@@ -7,13 +14,6 @@ public class User {
     private String password;
     private TYPE type;
     public User() {}
-    public User(String id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.type = TYPE.USER;
-    }
     public String getId() {
         return id;
     }
