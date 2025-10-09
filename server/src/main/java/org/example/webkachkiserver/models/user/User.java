@@ -8,16 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Data
 public class User {
-    private String id;
     private String name;
     private String email;
     private String password;
     private TYPE type;
-    public User() {}
-    public String getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
