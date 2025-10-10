@@ -11,7 +11,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private TYPE type;
+    private TYPE type = TYPE.USER;
     public String getName() {
         return name;
     }
