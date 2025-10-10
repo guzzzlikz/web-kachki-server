@@ -14,7 +14,7 @@ public class AuthService {
     @Autowired
     private HashService hashService;
 
-    public ResponseEntity<?> login(User user) {
+    public ResponseEntity<?> register(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
             return ResponseEntity.badRequest().body("Email address already in use");
         }
