@@ -4,8 +4,12 @@ import org.example.webkachkiserver.models.user.User;
 import org.example.webkachkiserver.repositrories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AuthService {
@@ -21,5 +25,21 @@ public class AuthService {
         user.setPassword(hashService.hash(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(user);
+    }
+
+    public ResponseEntity<?> login(User user) {
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        if(dbUser != null && hashService.hash(user.getPassword()).equals(dbUser.getPassword())) {
+            // TODO(add token)
+
+            Map<String, Object> response = new HashMap<>();
+
+            response.put("email", dbUser.getEmail());
+            response.put("name", dbUser.getName());
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
     }
 }

@@ -19,4 +19,9 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody User user) {
         return authService.register(user);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login (@RequestBody User user) {
+        return authService.login(user);
+    }
 }
