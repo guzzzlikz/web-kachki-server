@@ -2,6 +2,7 @@ package org.example.webkachkiserver.controllers;
 
 import org.example.webkachkiserver.models.user.User;
 import org.example.webkachkiserver.repositrories.UserRepository;
+import org.example.webkachkiserver.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,14 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class AuthController {
     @Autowired
-    private UserRepository userRepository;
+    private AuthService authService;
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            return ResponseEntity.badRequest().body("Already registered");
-        }
-        System.out.println(user.getEmail());
-        userRepository.save(user);
-        return ResponseEntity.ok().body("User registered successfully");
+        return authService.login(user);
     }
 }

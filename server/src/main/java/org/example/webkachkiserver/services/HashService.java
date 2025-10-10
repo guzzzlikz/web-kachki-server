@@ -7,7 +7,7 @@ import java.util.HexFormat;
 
 @Service
 public class HashService {
-    public static String hash(String input) {
+    public String hash(String input) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
