@@ -1,12 +1,11 @@
-package org.example.webkachkiserver.services;
+package org.example.webkachkiserver.components;
 
-import org.springframework.stereotype.Service;
-
+import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.util.HexFormat;
 
-@Service
-public class HashService {
+@Component
+public class HashComponent {
     public String hash(String input) {
         MessageDigest digest = null;
         try {
