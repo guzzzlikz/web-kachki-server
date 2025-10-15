@@ -10,7 +10,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JWTComponent {
+public class JWTComponent { //Можлива конвертація у фільтр
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final long endTime = 60 * 60 * 10000; //У секундах
     public String generateToken(String data) {
@@ -38,5 +38,12 @@ public class JWTComponent {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+    private boolean isExpired(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody().getExpiration().before(new Date());
     }
 }

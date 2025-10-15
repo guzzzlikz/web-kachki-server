@@ -1,6 +1,7 @@
 package org.example.webkachkiserver.services;
 
 import org.example.webkachkiserver.components.HashComponent;
+import org.example.webkachkiserver.components.JWTComponent;
 import org.example.webkachkiserver.models.user.User;
 import org.example.webkachkiserver.repositrories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class AuthService {
     private UserRepository userRepository;
     @Autowired
     private HashComponent hashComponent;
+    @Autowired
+    private JWTComponent jwtComponent;
 
     public ResponseEntity<?> register(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
@@ -24,7 +27,7 @@ public class AuthService {
         }
         user.setPassword(hashComponent.hash(user.getPassword()));
         userRepository.save(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(jwtComponent.generateToken(user.getEmail()));
     }
 
     public ResponseEntity<?> login(User user) {
@@ -33,11 +36,7 @@ public class AuthService {
             // TODO(add token)
 
             Map<String, Object> response = new HashMap<>();
-
-            response.put("email", dbUser.getEmail());
-            response.put("name", dbUser.getName());
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(jwtComponent.generateToken(user.getEmail()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
