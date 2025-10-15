@@ -1,7 +1,6 @@
 package org.example.webkachkiserver.controllers;
 
 import org.example.webkachkiserver.models.user.User;
-import org.example.webkachkiserver.repositrories.UserRepository;
 import org.example.webkachkiserver.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
