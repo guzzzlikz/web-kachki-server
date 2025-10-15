@@ -25,14 +25,14 @@ public class AuthService {
         if (userRepository.existsByEmail(user.getEmail())) {
             return ResponseEntity.badRequest().body("Email address already in use");
         }
-        user.setPassword(hashComponent.hash(user.getPassword()));
+        user.setPassword(hashComponent.hashToString(user.getPassword()));
         userRepository.save(user);
         return ResponseEntity.ok(jwtComponent.generateToken(user.getEmail()));
     }
 
     public ResponseEntity<?> login(User user) {
         User dbUser = userRepository.findByEmail(user.getEmail());
-        if(dbUser != null && hashComponent.hash(user.getPassword()).equals(dbUser.getPassword())) {
+        if(dbUser != null && hashComponent.hashToString(user.getPassword()).equals(dbUser.getPassword())) {
             // TODO(add token)
 
             Map<String, Object> response = new HashMap<>();

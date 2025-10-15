@@ -6,7 +6,7 @@ import java.util.HexFormat;
 
 @Component
 public class HashComponent {
-    public String hash(String input) {
+    public String hashToString(String input) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -15,5 +15,15 @@ public class HashComponent {
         }
         byte[] hash = digest.digest(input.getBytes());
         return  HexFormat.of().formatHex(hash);
+    }
+    public byte[] hashToByte(String input) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        byte[] hash = digest.digest(input.getBytes());
+        return hash;
     }
 }

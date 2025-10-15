@@ -3,22 +3,29 @@ package org.example.webkachkiserver.components;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Date;
 
 @Component
 public class JWTComponent { //Можлива конвертація у фільтр
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    @Autowired
+    HashComponent hashComponent;
+
+    @Value("${jwt.secret}")
+    private String key;
     private final long endTime = 60 * 60 * 10000; //У секундах
     public String generateToken(String data) {
         return Jwts.builder()
                 .setSubject(data)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + endTime))
-                .signWith(key)
+                .signWith(new SecretKeySpec(hashComponent.hashToByte(key), SignatureAlgorithm.HS256.getJcaName()))
                 .compact();
     }
     public String getDataFromToken(String token) {
@@ -34,14 +41,14 @@ public class JWTComponent { //Можлива конвертація у філь�
     }
     private Claims parseClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(key)
+                .setSigningKey(new SecretKeySpec(hashComponent.hashToByte(key), SignatureAlgorithm.HS256.getJcaName()))
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
     private boolean isExpired(String token) {
         return Jwts.parser()
-                .setSigningKey(key)
+                .setSigningKey(new SecretKeySpec(hashComponent.hashToByte(key), SignatureAlgorithm.HS256.getJcaName()))
                 .build()
                 .parseClaimsJws(token)
                 .getBody().getExpiration().before(new Date());
