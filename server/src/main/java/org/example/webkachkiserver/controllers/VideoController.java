@@ -26,7 +26,6 @@ public class VideoController {
                                          @RequestParam("title") String title) {
         try {
             String gcsPath = videoStorageService.uploadVideo(file, Integer.valueOf(courseId));
-
             Lesson lesson = Lesson.builder()
                     .title(title)
                     .courseId(Integer.valueOf(courseId))
@@ -40,11 +39,6 @@ public class VideoController {
 
     @GetMapping("/{courseId}/lessons")
     public List<Lesson> getLessons(@PathVariable Integer courseId) {
-        List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
-        return lessons.stream().map(lesson -> {
-            String signedUrl = videoStorageService.getSignedUrl(lesson.getFideoFileName());
-            return new Lesson(lesson.getId(), lesson.getTitle(), lesson.getDescription(),
-                    lesson.getTeacherId(), lesson.getCourseId(), signedUrl);
-        }).toList();
+        return videoStorageService.getLessons(courseId);
     }
 }
