@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
-@CrossOrigin(origins = "*")
 public class VideoController {
 
     @Autowired
@@ -28,12 +27,11 @@ public class VideoController {
         try {
             String gcsPath = videoStorageService.uploadVideo(file, Integer.valueOf(courseId));
 
-            Lesson lesson = new Lesson();
-            lesson.setTitle(title);
-            lesson.setCourseId(Integer.valueOf(courseId));
-            lesson.setFideoFileName(gcsPath);
+            Lesson lesson = Lesson.builder()
+                    .title(title)
+                    .courseId(Integer.valueOf(courseId))
+                    .fideoFileName(gcsPath).build();
             lessonRepository.save(lesson);
-
             return ResponseEntity.ok(lesson);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Upload failed: " + e.getMessage());
