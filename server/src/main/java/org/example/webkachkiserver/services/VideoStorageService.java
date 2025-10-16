@@ -2,7 +2,6 @@ package org.example.webkachkiserver.services;
 
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.example.webkachkiserver.models.lesson.Lesson;
 import org.example.webkachkiserver.repositrories.LessonRepository;
@@ -51,8 +50,14 @@ public class VideoStorageService {
         List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
         return lessons.stream().map(lesson -> {
             String signedUrl = getSignedUrl(lesson.getFideoFileName());
-            return new Lesson(lesson.getId(), lesson.getTitle(), lesson.getDescription(),
-                    lesson.getTeacherId(), lesson.getCourseId(), signedUrl);
+            return Lesson.builder()
+                    .courseId(lesson.getCourseId())
+                    .id(lesson.getId())
+                    .description(lesson.getDescription())
+                    .title(lesson.getTitle())
+                    .teacherId(lesson.getTeacherId())
+                    .fideoFileName(signedUrl)
+                    .build();
         }).toList();
     }
 }

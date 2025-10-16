@@ -2,6 +2,7 @@ package org.example.webkachkiserver.models.course;
 
 import lombok.Builder;
 import lombok.Data;
+import org.example.webkachkiserver.models.lesson.Lesson;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +18,7 @@ public class Course {
     private String creatorName;
     private String description;
     private List<TAGS> tagsList;
+    private List<Lesson> lessons;
     private String url;
 
     public String getTitle() {
@@ -49,6 +51,14 @@ public class Course {
 
     public void setTagsList(List<TAGS> tagsList) {
         this.tagsList = tagsList;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public String getUrl() {

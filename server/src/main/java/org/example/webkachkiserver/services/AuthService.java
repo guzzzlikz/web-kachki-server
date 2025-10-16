@@ -9,9 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 public class AuthService {
     @Autowired
@@ -33,9 +30,6 @@ public class AuthService {
     public ResponseEntity<?> login(User user) {
         User dbUser = userRepository.findByEmail(user.getEmail());
         if(dbUser != null && hashComponent.hashToString(user.getPassword()).equals(dbUser.getPassword())) {
-            // TODO(add token)
-
-            Map<String, Object> response = new HashMap<>();
             return ResponseEntity.ok(jwtComponent.generateToken(user.getEmail()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
