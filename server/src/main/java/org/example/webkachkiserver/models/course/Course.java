@@ -2,6 +2,7 @@ package org.example.webkachkiserver.models.course;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
 @Data
 @Builder
 public class Course {
+    @Id
+    private String id;
     private String title;
     private String creatorName;
     private String description;
