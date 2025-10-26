@@ -27,7 +27,7 @@ public class VideoStorageService {
     @Value("${gcs.bucket.name}")
     private String bucketName;
 
-    public String uploadVideo(MultipartFile file, Integer courseId) throws IOException {
+    public String uploadVideo(MultipartFile file, String courseId) throws IOException {
         log.info("Storage credentials: {}", storage.getOptions().getCredentials());
         String blobName = "videos/course" + courseId + "/" + file.getOriginalFilename();
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)

@@ -1,8 +1,9 @@
-package org.example.webkachkiserver.components;
+package org.example.webkachkiserver.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.example.webkachkiserver.components.HashComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,9 +12,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
 
 @Component
-public class JWTComponent { //Можлива конвертація у фільтр
+public class JWTService { //Можлива конвертація у фільтр
     @Autowired
-    HashComponent hashComponent;
+    private HashComponent hashComponent;
 
     @Value("${jwt.secret}")
     private String key;

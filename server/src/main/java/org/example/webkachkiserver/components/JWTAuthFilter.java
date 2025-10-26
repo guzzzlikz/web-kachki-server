@@ -3,6 +3,7 @@ package org.example.webkachkiserver.components;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.webkachkiserver.services.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,10 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Component
-
 public class JWTAuthFilter implements Filter {
     @Autowired
-    private JWTComponent jwtComponent;
+    private JWTService jwtService;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -23,9 +23,9 @@ public class JWTAuthFilter implements Filter {
         String authorization = request.getHeader("Authorization");
         if (authorization != null && authorization.startsWith("Bearer ")) {
             String token = authorization.substring("Bearer ".length());
-            String data = jwtComponent.getDataFromToken(token);
+            String data = jwtService.getDataFromToken(token);
             if (data != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                if (jwtComponent.validateToken(token)) {
+                if (jwtService.validateToken(token)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(data, null, new ArrayList<>());
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }

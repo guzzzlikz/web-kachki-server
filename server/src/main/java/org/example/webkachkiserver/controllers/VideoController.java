@@ -4,6 +4,7 @@ import org.example.webkachkiserver.models.lesson.Lesson;
 import org.example.webkachkiserver.repositrories.LessonRepository;
 import org.example.webkachkiserver.services.VideoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,16 +21,17 @@ public class VideoController {
     @Autowired
     private LessonRepository lessonRepository;
 
-    @PostMapping("/{courseId}/lessons/upload")
+    @PostMapping("/{courseId}/{lessonId}/upload")
     public ResponseEntity<?> uploadVideo(@PathVariable String courseId,
-                                         @RequestParam("file") MultipartFile file,
-                                         @RequestParam("title") String title) {
+                                         @PathVariable String lessonId,
+                                         @RequestParam("file") MultipartFile file) {
         try {
-            String gcsPath = videoStorageService.uploadVideo(file, Integer.valueOf(courseId));
-            Lesson lesson = Lesson.builder()
-                    .title(title)
-                    .courseId(Integer.valueOf(courseId))
-                    .fideoFileName(gcsPath).build();
+            String gcsPath = videoStorageService.uploadVideo(file, courseId);
+            Lesson lesson = lessonRepository.findById(lessonId);
+            lesson.setFideoFileName(gcsPath);
+            if (!lessonRepository.existsById(lessonId)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
             lessonRepository.save(lesson);
             return ResponseEntity.ok(lesson);
         } catch (Exception e) {

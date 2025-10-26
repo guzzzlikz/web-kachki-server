@@ -16,6 +16,7 @@ public class User {
     private String password;
     private TYPE type = TYPE.USER;
     private List<Course> boughtCourses;
+    private String pathToPhoto;
 
     public String getName() {
         return name;

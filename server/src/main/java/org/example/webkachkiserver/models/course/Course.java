@@ -19,7 +19,9 @@ public class Course {
     private String description;
     private List<TAGS> tagsList;
     private List<Lesson> lessons;
-    private String url;
+    private String pathToPreviewVideo;
+    private double rating;
+    private double rates;
 
     public String getTitle() {
         return title;
@@ -59,13 +61,5 @@ public class Course {
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

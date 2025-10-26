@@ -14,7 +14,7 @@ public class Lesson {
     private String title;
     private String description;
     private String teacherId;
-    private Integer courseId;
+    private String courseId;
     private String fideoFileName;
 
     public String getId() {
@@ -47,14 +47,6 @@ public class Lesson {
 
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
-    }
-
-    public Integer getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
     }
 
     public String getFideoFileName() {
