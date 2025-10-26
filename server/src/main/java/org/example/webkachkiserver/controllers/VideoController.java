@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("api/courses")
 public class VideoController {
 
     @Autowired
