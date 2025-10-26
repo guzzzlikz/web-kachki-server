@@ -24,7 +24,7 @@ public class VideoStorageService {
     @Autowired
     private LessonRepository lessonRepository;
 
-    @Value("${gcs.bucket.name}")
+    @Value("${gcs.bucket.video.name}")
     private String bucketName;
 
     public String uploadVideo(MultipartFile file, String courseId) throws IOException {
