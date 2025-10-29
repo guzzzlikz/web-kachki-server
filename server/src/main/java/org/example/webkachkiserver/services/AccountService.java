@@ -37,10 +37,28 @@ public class AccountService {
         List<Course> courses = courseRepository.findByUserId(userId);
         return ResponseEntity.ok(courses);
     }
-    public ResponseEntity<?> changeContactInformation(long userId, List<String> contactInformation) {
-        User user = userRepository.findById(userId);
-        user.setContacts(contactInformation);
-        userRepository.save(user);
-        return ResponseEntity.ok(user.getContacts());
+    public ResponseEntity<?> changeInstagram(long userId, String instagramUrl) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.getContacts().setInstUrl(instagramUrl);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getContacts().getInstUrl());
+    }
+    public ResponseEntity<?> changeFacebook(long userId, String facebookUrl) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.getContacts().setFacebookUrl(facebookUrl);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getContacts().getFacebookUrl());
+    }
+    public ResponseEntity<?> changeLinkedIn(long userId, String linkedInUrl) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.getContacts().setLinkedInUrl(linkedInUrl);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getContacts().getLinkedInUrl());
+    }
+    public ResponseEntity<?> changeTelegram(long userId, String telegramUrl) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.getContacts().setTelegramUrl(telegramUrl);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getContacts().getTelegramUrl());
     }
 }

@@ -11,7 +11,7 @@ public class LessonService {
     @Autowired
     private LessonRepository lessonRepository;
 
-    public ResponseEntity<?> createLesson(Lesson lesson, String lessonId, String courseId) {
+    public ResponseEntity<?> createLesson(Lesson lesson, long lessonId, long courseId) {
         lesson.setId(lessonId);
         lesson.setCourseId(courseId);
         lessonRepository.save(lesson);

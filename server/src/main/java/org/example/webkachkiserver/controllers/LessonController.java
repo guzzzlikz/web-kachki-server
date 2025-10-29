@@ -25,8 +25,8 @@ public class LessonController {
 
     @PostMapping("/{courseId}/{lessonId}/create")
     public ResponseEntity<?> createLesson(@RequestBody Lesson lesson,
-                                               @PathVariable String courseId,
-                                               @PathVariable String lessonId) {
+                                               @PathVariable long courseId,
+                                               @PathVariable long lessonId) {
         return lessonService.createLesson(lesson, courseId, lessonId);
     }
 }

@@ -19,7 +19,7 @@ public class User {
     private List<Course> boughtCourses;
     private String pathToPhoto;
     private String description;
-    private List<String> contacts;
+    private Contacts contacts;
 
     public long getId() {
         return id;
@@ -63,5 +63,17 @@ public class User {
 
     public void setBoughtCourses(List<Course> boughtCourses) {
         this.boughtCourses = boughtCourses;
+    }
+
+    public String getPathToPhoto() {
+        return pathToPhoto;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Contacts getContacts() {
+        return contacts;
     }
 }

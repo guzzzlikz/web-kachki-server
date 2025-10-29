@@ -11,11 +11,11 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public ResponseEntity<?> addCourse(Course course, String courseId) {
+    public ResponseEntity<?> addCourse(Course course, long courseId) {
         if (courseRepository.existsById(courseId)) {
             return ResponseEntity.badRequest().body("Course already exists");
         }
-        course.setId(courseId);
+        course.setCourseId(courseId);
         courseRepository.save(course);
         return ResponseEntity.ok().build();
     }

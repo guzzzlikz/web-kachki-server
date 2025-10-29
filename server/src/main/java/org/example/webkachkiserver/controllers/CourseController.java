@@ -21,7 +21,7 @@ public class CourseController {
     /*по цьому courseId*/
 
     @PostMapping("/{courseId}/add")
-    public ResponseEntity<?> addCourse(@RequestBody Course course, @PathVariable String courseId) {
+    public ResponseEntity<?> addCourse(@RequestBody Course course, @PathVariable long courseId) {
         return courseService.addCourse(course, courseId);
     }
     @PostMapping("/{courseId}/remove")

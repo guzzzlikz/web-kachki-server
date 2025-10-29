@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface CourseRepository extends MongoRepository<Course, Long> {
     Course findByCourseId(long id);
-    boolean existsByName(String name);
-    Course findByName(String name);
     List<Course> findByUserId(long id);
 }
