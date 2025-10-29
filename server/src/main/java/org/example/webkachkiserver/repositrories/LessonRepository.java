@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface LessonRepository extends MongoRepository<Lesson, Long> {
     List<Lesson> findByCourseId(long courseId);
-    Lesson findById(String lessonId);
-    boolean existsById(String lessonId);
+    Lesson findById(long lessonId);
+    boolean existsById(long lessonId);
 }

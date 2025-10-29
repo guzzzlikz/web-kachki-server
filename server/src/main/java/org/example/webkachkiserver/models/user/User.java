@@ -16,7 +16,7 @@ public class User {
     private String email;
     private String password;
     private TYPE type = TYPE.USER;
-    private List<Course> boughtCourses;
+    private List<Long> boughtCoursesId;
     private String pathToPhoto;
     private String description;
     private Contacts contacts;
@@ -55,14 +55,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Course> getBoughtCourses() {
-        return boughtCourses;
-    }
-
-    public void setBoughtCourses(List<Course> boughtCourses) {
-        this.boughtCourses = boughtCourses;
     }
 
     public String getPathToPhoto() {

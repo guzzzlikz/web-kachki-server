@@ -15,7 +15,7 @@ public class Lesson {
     private String description;
     private String teacherId;
     private long courseId;
-    private String fideoFileName;
+    private String videoFileName;
 
     public long getId() {
         return id;
@@ -49,11 +49,11 @@ public class Lesson {
         this.teacherId = teacherId;
     }
 
-    public String getFideoFileName() {
-        return fideoFileName;
+    public String getVideoFileName() {
+        return videoFileName;
     }
 
-    public void setFideoFileName(String fideoFileName) {
-        this.fideoFileName = fideoFileName;
+    public void setVideoFileName(String VideoFileName) {
+        this.videoFileName = videoFileName;
     }
 }

@@ -6,6 +6,7 @@ import org.example.webkachkiserver.services.VideoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,12 +24,12 @@ public class VideoController {
 
     @PostMapping("/{courseId}/{lessonId}/upload")
     public ResponseEntity<?> uploadVideo(@PathVariable long courseId,
-                                         @PathVariable String lessonId,
+                                         @PathVariable long lessonId,
                                          @RequestParam("file") MultipartFile file) {
         try {
             String gcsPath = videoStorageService.uploadVideo(file, courseId);
             Lesson lesson = lessonRepository.findById(lessonId);
-            lesson.setFideoFileName(gcsPath);
+            lesson.setVideoFileName(gcsPath);
             if (!lessonRepository.existsById(lessonId)) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -42,5 +43,9 @@ public class VideoController {
     @GetMapping("/{courseId}/lessons")
     public List<Lesson> getLessons(@PathVariable long courseId) {
         return videoStorageService.getLessons(courseId);
+    }
+    @GetMapping("/{courseId}/{lessonId}/video")
+    public ResponseEntity<?> getUrl(@PathVariable long lessonId) {
+        return videoStorageService.getUrl(lessonId);
     }
 }

@@ -7,6 +7,7 @@ import org.example.webkachkiserver.models.lesson.Lesson;
 import org.example.webkachkiserver.repositrories.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,15 +50,18 @@ public class VideoStorageService {
     public List<Lesson> getLessons(long courseId) {
         List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
         return lessons.stream().map(lesson -> {
-            String signedUrl = getSignedUrl(lesson.getFideoFileName());
+            String signedUrl = getSignedUrl(lesson.getVideoFileName());
             return Lesson.builder()
                     .courseId(lesson.getCourseId())
                     .id(lesson.getId())
                     .description(lesson.getDescription())
                     .title(lesson.getTitle())
                     .teacherId(lesson.getTeacherId())
-                    .fideoFileName(signedUrl)
+                    .videoFileName(signedUrl)
                     .build();
         }).toList();
+    }
+    public ResponseEntity<?> getUrl(long lessonId) {
+        return ResponseEntity.ok(lessonRepository.findById(lessonId).getVideoFileName());
     }
 }
