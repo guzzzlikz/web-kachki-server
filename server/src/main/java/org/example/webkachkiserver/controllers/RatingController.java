@@ -7,12 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/rating")
 public class RatingController {
     @Autowired
     private CourseRepository courseRepository;
     @PostMapping("/{courseId}/rating")
-    public ResponseEntity<?> updateRating(@RequestParam int rate, @PathVariable String courseId) {
+    public ResponseEntity<?> updateRating(@RequestParam int rate, @PathVariable long courseId) {
         Course course = courseRepository.findByCourseId(courseId);
         course.setRates(course.getRates() + 1);
         course.setRating(Math.round((

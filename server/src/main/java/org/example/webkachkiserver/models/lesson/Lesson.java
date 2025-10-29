@@ -10,18 +10,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class Lesson {
     @Id
-    private String id;
+    private long id;
     private String title;
     private String description;
     private String teacherId;
-    private String courseId;
+    private long courseId;
     private String fideoFileName;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

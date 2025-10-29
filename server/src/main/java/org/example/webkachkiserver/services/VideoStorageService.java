@@ -27,7 +27,7 @@ public class VideoStorageService {
     @Value("${gcs.bucket.video.name}")
     private String bucketName;
 
-    public String uploadVideo(MultipartFile file, String courseId) throws IOException {
+    public String uploadVideo(MultipartFile file, long courseId) throws IOException {
         log.info("Storage credentials: {}", storage.getOptions().getCredentials());
         String blobName = "videos/course" + courseId + "/" + file.getOriginalFilename();
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)
@@ -46,7 +46,7 @@ public class VideoStorageService {
         );
         return signedUrl.toString();
     }
-    public List<Lesson> getLessons(String courseId) {
+    public List<Lesson> getLessons(long courseId) {
         List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
         return lessons.stream().map(lesson -> {
             String signedUrl = getSignedUrl(lesson.getFideoFileName());

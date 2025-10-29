@@ -13,13 +13,15 @@ import java.util.List;
 @Builder
 public class Course {
     @Id
-    private String id;
+    private long courseId;
+    private long userId;
     private String title;
     private String creatorName;
     private String description;
     private List<TAGS> tagsList;
     private List<Lesson> lessons;
     private String pathToPreviewVideo;
+    private String pathToPreviewPhoto;
     private double rating;
     private int rates;
 

@@ -11,12 +11,19 @@ import java.util.List;
 @Builder
 @Data
 public class User {
+    private long id;
     private String name;
     private String email;
     private String password;
     private TYPE type = TYPE.USER;
     private List<Course> boughtCourses;
     private String pathToPhoto;
+    private String description;
+    private List<String> contacts;
+
+    public long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

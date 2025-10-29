@@ -22,7 +22,7 @@ public class VideoController {
     private LessonRepository lessonRepository;
 
     @PostMapping("/{courseId}/{lessonId}/upload")
-    public ResponseEntity<?> uploadVideo(@PathVariable String courseId,
+    public ResponseEntity<?> uploadVideo(@PathVariable long courseId,
                                          @PathVariable String lessonId,
                                          @RequestParam("file") MultipartFile file) {
         try {
@@ -40,7 +40,7 @@ public class VideoController {
     }
 
     @GetMapping("/{courseId}/lessons")
-    public List<Lesson> getLessons(@PathVariable String courseId) {
+    public List<Lesson> getLessons(@PathVariable long courseId) {
         return videoStorageService.getLessons(courseId);
     }
 }
