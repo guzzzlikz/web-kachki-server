@@ -46,7 +46,7 @@ public class VideoStorageService {
         );
         return signedUrl.toString();
     }
-    public List<Lesson> getLessons(Integer courseId) {
+    public List<Lesson> getLessons(String courseId) {
         List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
         return lessons.stream().map(lesson -> {
             String signedUrl = getSignedUrl(lesson.getFideoFileName());

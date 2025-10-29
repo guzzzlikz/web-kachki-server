@@ -21,7 +21,7 @@ public class Course {
     private List<Lesson> lessons;
     private String pathToPreviewVideo;
     private double rating;
-    private double rates;
+    private int rates;
 
     public String getTitle() {
         return title;

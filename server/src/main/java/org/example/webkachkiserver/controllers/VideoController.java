@@ -40,7 +40,7 @@ public class VideoController {
     }
 
     @GetMapping("/{courseId}/lessons")
-    public List<Lesson> getLessons(@PathVariable Integer courseId) {
+    public List<Lesson> getLessons(@PathVariable String courseId) {
         return videoStorageService.getLessons(courseId);
     }
 }
