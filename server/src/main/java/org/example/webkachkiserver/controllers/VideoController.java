@@ -4,9 +4,7 @@ import org.example.webkachkiserver.models.lesson.Lesson;
 import org.example.webkachkiserver.repositrories.LessonRepository;
 import org.example.webkachkiserver.services.VideoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,9 +28,6 @@ public class VideoController {
             String gcsPath = videoStorageService.uploadVideo(file, courseId);
             Lesson lesson = lessonRepository.findById(lessonId);
             lesson.setVideoFileName(gcsPath);
-            if (!lessonRepository.existsById(lessonId)) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
             lessonRepository.save(lesson);
             return ResponseEntity.ok(lesson);
         } catch (Exception e) {

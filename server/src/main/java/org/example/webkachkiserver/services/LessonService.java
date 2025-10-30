@@ -17,4 +17,9 @@ public class LessonService {
         lessonRepository.save(lesson);
         return ResponseEntity.ok(lesson);
     }
+
+    public ResponseEntity<?> removeLesson(long lessonId) {
+        lessonRepository.deleteById(lessonId);
+        return ResponseEntity.ok().body("Removed");
+    }
 }

@@ -53,7 +53,7 @@ public class Lesson {
         return videoFileName;
     }
 
-    public void setVideoFileName(String VideoFileName) {
+    public void setVideoFileName(String videoFileName) {
         this.videoFileName = videoFileName;
     }
 }

@@ -2,7 +2,6 @@ package org.example.webkachkiserver.models.user;
 
 import lombok.Builder;
 import lombok.Data;
-import org.example.webkachkiserver.models.course.Course;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;

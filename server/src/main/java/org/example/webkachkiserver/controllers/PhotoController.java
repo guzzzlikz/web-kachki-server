@@ -1,6 +1,5 @@
 package org.example.webkachkiserver.controllers;
 
-import org.example.webkachkiserver.models.lesson.Lesson;
 import org.example.webkachkiserver.models.user.User;
 import org.example.webkachkiserver.repositrories.UserRepository;
 import org.example.webkachkiserver.services.PhotoStorageService;

@@ -23,8 +23,8 @@ public class CourseService {
         courseRepository.save(course);
         return ResponseEntity.ok().build();
     }
-    public ResponseEntity<?> removeCourse(Course course) {
-        courseRepository.delete(course);
+    public ResponseEntity<?> removeCourse(long courseId) {
+        courseRepository.deleteById(courseId);
         return ResponseEntity.ok().build();
     }
     public ResponseEntity<?> buyCourse(long userId, long courseId) {
