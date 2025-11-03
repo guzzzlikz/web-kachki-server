@@ -20,11 +20,11 @@ public class CourseController {
     /*courseId і відповідно мені потім прилтає запрос
     /*по цьому courseId*/
 
-    @PostMapping("/{courseId}/add")
+    @PostMapping("/{userId}/{courseId}/add")
     public ResponseEntity<?> addCourse(@RequestBody Course course, @PathVariable long courseId) {
         return courseService.addCourse(course, courseId);
     }
-    @PostMapping("/{courseId}/remove")
+    @PostMapping("/{userId}/{courseId}/remove")
     public ResponseEntity<?> removeCourse(@PathVariable long courseId) {
         return courseService.removeCourse(courseId);
     }
