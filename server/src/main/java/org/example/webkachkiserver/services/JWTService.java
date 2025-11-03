@@ -21,7 +21,7 @@ public class JWTService { //Можлива конвертація у фільт�
     private final long endTime = 60 * 60 * 10000; //У секундах
     public String generateToken(String data) {
         return Jwts.builder()
-                .setSubject(data)
+                .setSubject(String.valueOf(data))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + endTime))
                 .signWith(new SecretKeySpec(hashComponent.hashToByte(key), SignatureAlgorithm.HS256.getJcaName()))

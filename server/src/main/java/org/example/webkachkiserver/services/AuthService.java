@@ -29,9 +29,15 @@ public class AuthService {
     public ResponseEntity<?> login(User user) {
         User dbUser = userRepository.findByEmail(user.getEmail());
         if(dbUser != null && hashComponent.hashToString(user.getPassword()).equals(dbUser.getPassword())) {
-            return ResponseEntity.ok(jwtService.generateToken(user.getEmail()));
+            return ResponseEntity.ok().body(jwtService.generateToken(user.getEmail()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
+    }
+
+    public ResponseEntity<?> getId(String token) {
+        String email = jwtService.getDataFromToken(token);
+        long id = userRepository.findByEmail(email).getId();
+        return ResponseEntity.ok(id);
     }
 }
