@@ -6,24 +6,25 @@ import com.google.cloud.storage.StorageOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Base64;
 
 @Configuration
 public class GcsConfig {
-    @Value("${gcp.credentials.location}")
-    private String credentialsPath;
+    @Value("${gcs.credentials.json}")
+    private String credentialsJson;
 
     @Bean
     public Storage storage() throws IOException {
-        if (credentialsPath == null || credentialsPath.isEmpty()) {
-            throw new IllegalStateException("GOOGLE_APPLICATION_CREDENTIALS environment variable not set");
-        }
-
+        byte[] decodedBytes = Base64.getDecoder().decode(credentialsJson);
+        System.out.println(decodedBytes);
         GoogleCredentials credentials = GoogleCredentials.fromStream(
-                        new FileInputStream(credentialsPath))
+                        new ByteArrayInputStream(decodedBytes))
                 .createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
 
         return StorageOptions.newBuilder()
