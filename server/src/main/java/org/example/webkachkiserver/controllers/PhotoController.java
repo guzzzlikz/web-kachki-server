@@ -45,4 +45,12 @@ public class PhotoController {
     public ResponseEntity<?> getUrl(@PathVariable long userId) {
         return photoStorageService.getUrl(userId);
     }
+    @GetMapping("/index")
+    public ResponseEntity<?> getPhotosForIndex() {
+        return photoStorageService.getPhotosForIndex();
+    }
+    @GetMapping("/misc")
+    public ResponseEntity<?> getMiscPhotos() {
+        return photoStorageService.getMiscPhotos();
+    }
 }

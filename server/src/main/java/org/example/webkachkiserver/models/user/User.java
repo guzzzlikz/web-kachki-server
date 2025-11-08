@@ -14,7 +14,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private TYPE type = TYPE.USER;
+    private TYPE type;
     private List<Long> boughtCoursesId;
     private String pathToPhoto;
     private String description;
