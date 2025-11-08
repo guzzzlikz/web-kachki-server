@@ -1,6 +1,7 @@
 package org.example.webkachkiserver.services;
 
 import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.HttpMethod;
 import com.google.cloud.storage.Storage;
 import lombok.extern.slf4j.Slf4j;
 import org.example.webkachkiserver.models.lesson.Lesson;
@@ -13,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -28,14 +31,20 @@ public class VideoStorageService {
     @Value("${gcs.bucket.video.name}")
     private String bucketName;
 
-    public String uploadVideo(MultipartFile file, long courseId) throws IOException {
+    public String generateUrl(String fileName, String type, long courseId) {
         log.info("Storage credentials: {}", storage.getOptions().getCredentials());
-        String blobName = "videos/course" + courseId + "/" + file.getOriginalFilename();
+        String blobName = "videos/course" + courseId + "/" + fileName;
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)
-                .setContentType(file.getContentType())
+                .setContentType(type)
                 .build();
-        storage.create(blobInfo, file.getBytes());
-        return blobName;
+        Map<String, String> params = new HashMap<>();
+        params.put("uploadType", "resumable");
+        URL signedUrl = storage.getOptions()
+                        .getService()
+                .signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+                        Storage.SignUrlOption.withV4Signature(),
+                        Storage.SignUrlOption.withContentType());
+        return signedUrl.toString();
     }
 
     public String getSignedUrl(String objectName) {

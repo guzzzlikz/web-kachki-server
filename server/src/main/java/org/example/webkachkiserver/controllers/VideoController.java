@@ -6,9 +6,9 @@ import org.example.webkachkiserver.services.VideoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("api/courses")
@@ -20,27 +20,34 @@ public class VideoController {
     @Autowired
     private LessonRepository lessonRepository;
 
-    @PostMapping("/{courseId}/{lessonId}/upload")
-    public ResponseEntity<?> uploadVideo(@PathVariable long courseId,
+    @PostMapping("/{courseId}/{lessonId}/generateUrl")
+    public ResponseEntity<?> generateUrl(@PathVariable long courseId,
                                          @PathVariable long lessonId,
-                                         @RequestParam("file") MultipartFile file) {
-        try {
-            String gcsPath = videoStorageService.uploadVideo(file, courseId);
-            Lesson lesson = lessonRepository.findById(lessonId);
-            lesson.setVideoFileName(gcsPath);
-            lessonRepository.save(lesson);
-            return ResponseEntity.ok(lesson);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Upload failed: " + e.getMessage());
-        }
+                                         @RequestBody FileData data) {
+        String gcsPath = videoStorageService.generateUrl(data.title, data.type, courseId);
+        return ResponseEntity.ok(gcsPath);
+    }
+
+    @PostMapping("/{courseId}/{lessonId}/finish")
+    public ResponseEntity<?> finishVideo(@PathVariable long courseId, @PathVariable long lessonId, @RequestBody FileData data) {
+        Lesson lesson = lessonRepository.findById(lessonId);
+        lesson.setVideoFileName("videos/course" + courseId + "/" + data.title);
+        lessonRepository.save(lesson);
+        return ResponseEntity.ok("Good!");
     }
 
     @GetMapping("/{courseId}/lessons")
     public List<Lesson> getLessons(@PathVariable long courseId) {
         return videoStorageService.getLessons(courseId);
     }
+
     @GetMapping("/{courseId}/{lessonId}/video")
     public ResponseEntity<?> getUrl(@PathVariable long lessonId) {
         return videoStorageService.getUrl(lessonId);
     }
+}
+
+class FileData {
+    public String title;
+    public String type;
 }
