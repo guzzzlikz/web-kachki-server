@@ -1,7 +1,9 @@
-GET запроси для картінок
+CORS-Policy
 
-Розбив їх за сторінками, поки є індекс то тільки для нього
+Авторизовані ip
 
-Прописав також заготовку під тренерів та курси, скоро викачу повну реалізацію
-
-.svg засунув у misc
+"http://localhost:8080",
+"http://localhost:5173",
+"https://web-kachki-server-latest.onrender.com",
+"https://test-server-kachki.vercel.app",
+"https://reqbin.com/post-online"
