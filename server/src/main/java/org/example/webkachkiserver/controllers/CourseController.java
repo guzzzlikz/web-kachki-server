@@ -36,4 +36,18 @@ public class CourseController {
     public ResponseEntity<?> buyCourse(@PathVariable long userId, @PathVariable long courseId) {
         return courseService.buyCourse(userId, courseId);
     }
+    @GetMapping("/{userId}/get")
+    public ResponseEntity<?> getBoughtCourses(@PathVariable long userId) {
+        return courseService.getBoughtCourses(userId);
+    }
+    @GetMapping()
+    public ResponseEntity<?> getAllCourses(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "rating") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
+        return courseService.getCoursesPreview(page, size, sortBy, direction);
+    }
+
 }

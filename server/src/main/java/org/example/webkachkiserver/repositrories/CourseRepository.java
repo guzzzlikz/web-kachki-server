@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseRepository extends MongoRepository<Course, Long> {
     Course findByCourseId(long id);
     List<Course> findByUserId(long id);
+    List<Course> findByCourseIdIn(List<Long> ids);
 }
