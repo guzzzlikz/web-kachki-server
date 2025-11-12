@@ -19,6 +19,8 @@ public class User {
     private String pathToPhoto;
     private String description;
     private Contacts contacts;
+    private double rating;
+    private int rates;
 
     public long getId() {
         return id;

@@ -85,7 +85,7 @@ public class PhotoStorageService {
     }
     public Map<String, String> getPhotosForTrainers() {
         Map<String, String> photoUrls = new HashMap<>();
-        List<User> users = userRepository.findAllByType(TYPE.COUCH);
+        List<User> users = userRepository.findAllByType(TYPE.COACH);
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
             String url = user.getPathToPhoto();

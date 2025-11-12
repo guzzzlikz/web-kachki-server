@@ -2,6 +2,6 @@ package org.example.webkachkiserver.models.user;
 
 public enum TYPE {
     USER,
-    COUCH,
+    COACH,
     ADMIN
 }
