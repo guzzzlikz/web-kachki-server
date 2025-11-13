@@ -29,11 +29,11 @@ public class CourseService {
         }
         course.setCourseId(courseId);
         courseRepository.save(course);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Added!");
     }
     public ResponseEntity<?> removeCourse(long courseId) {
         courseRepository.deleteById(courseId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Removed!");
     }
     public ResponseEntity<?> buyCourse(long userId, long courseId) {
         User mongoUser = userRepository.findById(userId);
