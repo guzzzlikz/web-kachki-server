@@ -14,7 +14,7 @@ public class CoachController {
     @Autowired
     private CoachService coachService;
     @GetMapping("/index")
-    public ResponseEntity<?> getCoaches() {
+    public ResponseEntity<?> getCoachesForIndex() {
         return coachService.getCoachesForIndex();
     }
     @GetMapping("/coachId")

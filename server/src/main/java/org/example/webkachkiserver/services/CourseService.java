@@ -72,4 +72,13 @@ public class CourseService {
             return course;
         }));
     }
+
+    public ResponseEntity<?> getCoursesForIndex() {
+        List<Course> courses = courseRepository.findAll();
+        courses.sort((c1, c2) -> Double.compare(c2.getRates(), c1.getRates()));
+        courses.stream()
+                .limit(3)
+                .toList();
+        return ResponseEntity.ok(courses);
+    }
 }

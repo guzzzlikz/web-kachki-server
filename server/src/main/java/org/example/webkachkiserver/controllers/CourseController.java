@@ -49,5 +49,9 @@ public class CourseController {
     ) {
         return courseService.getCoursesPreview(page, size, sortBy, direction);
     }
+    @GetMapping("/index")
+    public ResponseEntity<?> getCoursesForIndex() {
+        return courseService.getCoursesForIndex();
+    }
 
 }

@@ -79,33 +79,7 @@ public class PhotoStorageService {
             String name = blob.getName().substring(13);
             photoUrls.put(name, url);
         }
-        photoUrls.putAll(getPhotosForCourses());
-        photoUrls.putAll(getPhotosForTrainers());
         return ResponseEntity.ok(photoUrls);
-    }
-    public Map<String, String> getPhotosForTrainers() {
-        Map<String, String> photoUrls = new HashMap<>();
-        List<User> users = userRepository.findAllByType(TYPE.COACH);
-        for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
-            String url = user.getPathToPhoto();
-            photoUrls.put(user.getPathToPhoto() + i + 1, url);
-        }
-        return photoUrls;
-    }
-    public Map<String, String> getPhotosForCourses() {
-        Map<String, String> photoUrls = new HashMap<>();
-        List<Course> courses = courseRepository.findAll();
-        courses.sort((c1, c2) -> Double.compare(c2.getRates(), c1.getRates()));
-        courses.stream()
-                .limit(3)
-                .toList();
-        for (int i = 0; i < courses.size(); i++) {
-            Course course = courses.get(i);
-            String url = course.getPathToPreviewPhoto();
-            photoUrls.put(course.getPathToPreviewPhoto() + i + 1, url);
-        }
-        return photoUrls;
     }
     public ResponseEntity<?> getMiscPhotos() {
         Map<String, String> photoUrls = new HashMap<>();
