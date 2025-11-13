@@ -13,6 +13,6 @@ public interface UserRepository extends MongoRepository<User, Long> {
     User findByEmail(String email);
     User findById(long id);
     List<User> findAllByType(TYPE type);
-
+    User findByName(String name);
     boolean existsByName(String name);
 }

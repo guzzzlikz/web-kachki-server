@@ -22,4 +22,10 @@ public class CoachService {
                 .toList();
         return ResponseEntity.ok(coaches);
     }
+    public ResponseEntity<?> getCoachesId(String name) {
+        if (userRepository.findByName(name) == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(userRepository.findByName(name).getId());
+    }
 }
