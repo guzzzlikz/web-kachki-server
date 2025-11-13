@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JWTService { //Можлива конвертація у фільтр
@@ -21,7 +22,7 @@ public class JWTService { //Можлива конвертація у фільт�
     private final long endTime = 60 * 60 * 10000; //У секундах
     public String generateToken(String data) {
         return Jwts.builder()
-                .setSubject(String.valueOf(data))
+                .setSubject(data)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + endTime))
                 .signWith(new SecretKeySpec(hashComponent.hashToByte(key), SignatureAlgorithm.HS256.getJcaName()))
