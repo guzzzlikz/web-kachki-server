@@ -5,6 +5,7 @@ import com.google.cloud.storage.HttpMethod;
 import com.google.cloud.storage.Storage;
 import lombok.extern.slf4j.Slf4j;
 import org.example.webkachkiserver.models.lesson.Lesson;
+import org.example.webkachkiserver.repositrories.CourseRepository;
 import org.example.webkachkiserver.repositrories.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,13 +28,15 @@ public class VideoStorageService {
     private Storage storage;
     @Autowired
     private LessonRepository lessonRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Value("${gcs.bucket.video.name}")
     private String bucketName;
 
-    public String generateUrl(String fileName, String type, long courseId) {
+    public String generateUrl(String type, long courseId, long lessonId) {
         log.info("Storage credentials: {}", storage.getOptions().getCredentials());
-        String blobName = "videos/course" + courseId + "/" + fileName;
+        String blobName = "videos/course" + courseId + "/" + "lesson" + lessonId;
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)
                 .setContentType(type)
                 .build();
@@ -41,6 +44,22 @@ public class VideoStorageService {
         params.put("uploadType", "resumable");
         URL signedUrl = storage.getOptions()
                         .getService()
+                .signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+                        Storage.SignUrlOption.withV4Signature(),
+                        Storage.SignUrlOption.withContentType());
+        return signedUrl.toString();
+    }
+    public String generateUrl(String type, long courseId) {
+        log.info("Storage credentials: {}", storage.getOptions().getCredentials());
+        String name = "preview_" + courseId + ".mp4";
+        String blobName = "videos/course" + courseId + "/" + name;
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)
+                .setContentType(type)
+                .build();
+        Map<String, String> params = new HashMap<>();
+        params.put("uploadType", "resumable");
+        URL signedUrl = storage.getOptions()
+                .getService()
                 .signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
                         Storage.SignUrlOption.withV4Signature(),
                         Storage.SignUrlOption.withContentType());
@@ -55,22 +74,5 @@ public class VideoStorageService {
                 Storage.SignUrlOption.withV4Signature()
         );
         return signedUrl.toString();
-    }
-    public List<Lesson> getLessons(long courseId) {
-        List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
-        return lessons.stream().map(lesson -> {
-            String signedUrl = getSignedUrl(lesson.getVideoFileName());
-            return Lesson.builder()
-                    .courseId(lesson.getCourseId())
-                    .id(lesson.getId())
-                    .description(lesson.getDescription())
-                    .title(lesson.getTitle())
-                    .teacherId(lesson.getTeacherId())
-                    .videoFileName(signedUrl)
-                    .build();
-        }).toList();
-    }
-    public ResponseEntity<?> getUrl(long lessonId) {
-        return ResponseEntity.ok(lessonRepository.findById(lessonId).getVideoFileName());
     }
 }

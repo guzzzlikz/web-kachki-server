@@ -21,14 +21,14 @@ public class CourseController {
     /*по цьому courseId*/
 
     @PostMapping("/{userId}/{courseId}/add")
-    public ResponseEntity<?> addCourse(@RequestBody Course course, @PathVariable long courseId) {
-        return courseService.addCourse(course, courseId);
+    public ResponseEntity<?> addCourse(@RequestBody Course course, @PathVariable long courseId, @PathVariable long userId) {
+        return courseService.addCourse(course, courseId, userId);
     }
     @PostMapping("/{userId}/{courseId}/remove")
     public ResponseEntity<?> removeCourse(@PathVariable long courseId) {
         return courseService.removeCourse(courseId);
     }
-    @GetMapping("/{userId}/{courseId}")
+    @GetMapping("/{userId}/{courseId}/check")
     public ResponseEntity<?> checkCourse(@PathVariable long userId, @PathVariable long courseId) {
         return courseService.checkCourse(userId, courseId);
     }
@@ -36,7 +36,7 @@ public class CourseController {
     public ResponseEntity<?> buyCourse(@PathVariable long userId, @PathVariable long courseId) {
         return courseService.buyCourse(userId, courseId);
     }
-    @GetMapping("/{userId}/get")
+    @GetMapping("/{userId}/getBought")
     public ResponseEntity<?> getBoughtCourses(@PathVariable long userId) {
         return courseService.getBoughtCourses(userId);
     }

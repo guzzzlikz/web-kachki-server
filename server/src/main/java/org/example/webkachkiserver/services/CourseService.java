@@ -22,12 +22,17 @@ public class CourseService {
     private CourseRepository courseRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PhotoStorageService photoStorageService;
+    @Autowired
+    private VideoStorageService videoStorageService;
 
-    public ResponseEntity<?> addCourse(Course course, long courseId) {
+    public ResponseEntity<?> addCourse(Course course, long courseId, long userId) {
         if (courseRepository.existsById(courseId)) {
             return ResponseEntity.badRequest().body("Course already exists");
         }
         course.setCourseId(courseId);
+        course.setUserId(userId);
         courseRepository.save(course);
         return ResponseEntity.ok("Added!");
     }
@@ -79,6 +84,10 @@ public class CourseService {
         courses.stream()
                 .limit(3)
                 .toList();
+        courses.stream().forEach(course -> {
+            course.setPathToPreviewVideo(videoStorageService.getSignedUrl(course.getPathToPreviewVideo()));
+            course.setPathToPreviewPhoto(photoStorageService.getSignedUrl(course.getPathToPreviewPhoto()));
+        });
         return ResponseEntity.ok(courses);
     }
 }

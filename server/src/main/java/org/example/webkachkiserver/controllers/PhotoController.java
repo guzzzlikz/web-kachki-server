@@ -1,6 +1,8 @@
 package org.example.webkachkiserver.controllers;
 
+import org.example.webkachkiserver.models.course.Course;
 import org.example.webkachkiserver.models.user.User;
+import org.example.webkachkiserver.repositrories.CourseRepository;
 import org.example.webkachkiserver.repositrories.UserRepository;
 import org.example.webkachkiserver.services.PhotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,14 @@ public class PhotoController {
 
     @Autowired
     private PhotoStorageService photoStorageService;
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/{userId}/upload")
-    public ResponseEntity<?> uploadVideo(@PathVariable long userId,
+    @PostMapping("/{userId}/uploadUser")
+    public ResponseEntity<?> uploadUserProfilePhoto(@PathVariable long userId,
                                          @RequestParam("file") MultipartFile file) {
         try {
             String gcsPath = photoStorageService.uploadUserProfilePhoto(file, userId);
@@ -53,4 +57,20 @@ public class PhotoController {
     public ResponseEntity<?> getMiscPhotos() {
         return photoStorageService.getMiscPhotos();
     }
+    @PostMapping("/{courseId}/uploadCoursePhoto")
+    public ResponseEntity<?> uploadCoursePhoto(@RequestParam("file") MultipartFile file, @PathVariable long courseId) {
+        try {
+            String gcsPath = photoStorageService.uploadCoursePhoto(file, courseId);
+            Course course = courseRepository.findByCourseId(courseId);
+            course.setPathToPreviewPhoto(gcsPath);
+            if (!courseRepository.existsById(courseId)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            courseRepository.save(course);
+            return ResponseEntity.ok(course);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Upload failed: " + e.getMessage());
+        }
+    }
+
 }

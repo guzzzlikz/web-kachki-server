@@ -2,9 +2,12 @@ package org.example.webkachkiserver.controllers;
 
 import org.example.webkachkiserver.models.lesson.Lesson;
 import org.example.webkachkiserver.services.LessonService;
+import org.example.webkachkiserver.services.VideoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/lessons")
@@ -32,5 +35,9 @@ public class LessonController {
     @PostMapping("/{courseId}/{lessonId}/remove")
     public ResponseEntity<?> removeLesson(@PathVariable long lessonId) {
         return lessonService.removeLesson(lessonId);
+    }
+    @GetMapping("/{courseId}/lessons")
+    public List<Lesson> getLessons(@PathVariable long courseId) {
+        return lessonService.getLessons(courseId);
     }
 }

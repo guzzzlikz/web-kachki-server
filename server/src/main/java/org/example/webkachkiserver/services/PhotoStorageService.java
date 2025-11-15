@@ -44,6 +44,15 @@ public class PhotoStorageService {
 
         return blobName;
     }
+    public String uploadCoursePhoto(MultipartFile file, long courseId) throws IOException {
+        String blobName = "photos/course/" + courseId + "/" + file.getOriginalFilename();
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)
+                .setContentType(file.getContentType())
+                .build();
+        storage.create(blobInfo, file.getBytes());
+        return blobName;
+    }
+
 
     public String getSignedUrl(String objectName) {
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, objectName).build();
