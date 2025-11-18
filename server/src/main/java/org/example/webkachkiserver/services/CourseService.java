@@ -73,7 +73,11 @@ public class CourseService {
 
         Pageable pageable = PageRequest.of(page, size, sort);
         return ResponseEntity.ok(courseRepository.findAll(pageable).map(course -> {
-            course.getLessons().forEach(l -> l.setVideoFileName(course.getPathToPreviewVideo()));
+            course.getLessons().forEach(l -> {
+                if (l.getVideoFileName() != null) {
+                l.setVideoFileName(course.getPathToPreviewVideo());
+            }
+            });
             return course;
         }));
     }
@@ -85,8 +89,12 @@ public class CourseService {
                 .limit(3)
                 .toList();
         courses.stream().forEach(course -> {
-            course.setPathToPreviewVideo(videoStorageService.getSignedUrl(course.getPathToPreviewVideo()));
-            course.setPathToPreviewPhoto(photoStorageService.getSignedUrl(course.getPathToPreviewPhoto()));
+            if (course.getPathToPreviewVideo() != null) {
+                course.setPathToPreviewVideo(videoStorageService.getSignedUrl(course.getPathToPreviewVideo()));
+            }
+            if (course.getPathToPreviewPhoto() != null) {
+                course.setPathToPreviewPhoto(photoStorageService.getSignedUrl(course.getPathToPreviewPhoto()));
+            }
         });
         return ResponseEntity.ok(courses);
     }
