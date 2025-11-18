@@ -32,7 +32,7 @@ public class LessonController {
                                                @PathVariable long lessonId) {
         return lessonService.createLesson(lesson, courseId, lessonId);
     }
-    @PostMapping("/{courseId}/{lessonId}/remove")
+    @DeleteMapping("/{courseId}/{lessonId}/remove")
     public ResponseEntity<?> removeLesson(@PathVariable long lessonId) {
         return lessonService.removeLesson(lessonId);
     }

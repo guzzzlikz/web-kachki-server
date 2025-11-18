@@ -24,7 +24,7 @@ public class CourseController {
     public ResponseEntity<?> addCourse(@RequestBody Course course, @PathVariable long courseId, @PathVariable long userId) {
         return courseService.addCourse(course, courseId, userId);
     }
-    @PostMapping("/{userId}/{courseId}/remove")
+    @DeleteMapping("/{userId}/{courseId}/remove")
     public ResponseEntity<?> removeCourse(@PathVariable long courseId) {
         return courseService.removeCourse(courseId);
     }
