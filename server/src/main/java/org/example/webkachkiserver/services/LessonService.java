@@ -1,6 +1,8 @@
 package org.example.webkachkiserver.services;
 
+import org.example.webkachkiserver.models.course.Course;
 import org.example.webkachkiserver.models.lesson.Lesson;
+import org.example.webkachkiserver.repositrories.CourseRepository;
 import org.example.webkachkiserver.repositrories.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ public class LessonService {
     private LessonRepository lessonRepository;
     @Autowired
     private VideoStorageService videoStorageService;
+    @Autowired
+    private CourseRepository courseRepository;
 
     public ResponseEntity<?> createLesson(Lesson lesson, long courseId, long lessonId) {
         lesson.setId(lessonId);
@@ -33,5 +37,11 @@ public class LessonService {
             lesson.setVideoFileName(videoStorageService.getSignedUrl(lesson.getVideoFileName()));
         });
         return lessons;
+    }
+
+    public Lesson getLesson(long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId);
+        lesson.setVideoFileName(videoStorageService.getSignedUrl(lesson.getVideoFileName()));
+        return lesson;
     }
 }

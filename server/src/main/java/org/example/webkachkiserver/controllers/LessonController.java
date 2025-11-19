@@ -40,4 +40,8 @@ public class LessonController {
     public List<Lesson> getLessons(@PathVariable long courseId) {
         return lessonService.getLessons(courseId);
     }
+    @GetMapping("/{courseId}/{lessonId}/lesson")
+    public Lesson getLesson(@PathVariable long lessonId) {
+        return lessonService.getLesson(lessonId);
+    }
 }

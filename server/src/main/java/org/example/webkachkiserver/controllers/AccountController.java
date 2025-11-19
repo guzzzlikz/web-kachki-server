@@ -42,9 +42,4 @@ public class AccountController {
     public ResponseEntity<?> changeTelegram(@PathVariable long userId, @RequestParam String telegramUrl) {
         return accountService.changeTelegram(userId, telegramUrl);
     }
-
-    @PostMapping("{userId}/photo")
-    public ResponseEntity<?> changePhoto(@PathVariable long userId, @RequestParam String newPhoto) {
-        return ResponseEntity.ok().build(); //Заглушка, чекаю фотосервіс
-    }
 }
