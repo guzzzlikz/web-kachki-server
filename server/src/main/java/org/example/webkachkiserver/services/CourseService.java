@@ -72,14 +72,16 @@ public class CourseService {
                 : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(courseRepository.findAll(pageable).map(course -> {
-            course.getLessons().forEach(l -> {
-                if (l.getVideoFileName() != null) {
-                l.setVideoFileName(course.getPathToPreviewVideo());
+        List<Course> courses = courseRepository.findAll(pageable).stream().toList();
+        courses.forEach(course -> {
+            if (course.getPathToPreviewVideo() != null) {
+                course.setPathToPreviewVideo(videoStorageService.getSignedUrl(course.getPathToPreviewVideo()));
             }
-            });
-            return course;
-        }));
+            if (course.getPathToPreviewPhoto() != null) {
+                course.setPathToPreviewPhoto(photoStorageService.getSignedUrl(course.getPathToPreviewPhoto()));
+            }
+        });
+        return ResponseEntity.ok(courses);
     }
 
     public ResponseEntity<?> getCoursesForIndex() {
