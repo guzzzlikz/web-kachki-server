@@ -64,13 +64,6 @@ public class PhotoStorageService {
         return signedUrl.toString();
     }
 
-    public User getUser(long userId) {
-        User user = userRepository.findById(userId);
-        String signedUrl = getSignedUrl(user.getPathToPhoto());
-        user.setPathToPhoto(signedUrl);
-        return user;
-    }
-
     public ResponseEntity<?> getUrl(long lessonId) {
         return ResponseEntity.ok(userRepository.findById(lessonId).getPathToPhoto());
     }

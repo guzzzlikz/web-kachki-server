@@ -17,9 +17,13 @@ public class AccountService {
     UserRepository userRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private PhotoStorageService photoStorageService;
 
     public ResponseEntity<?> getUser(long userId) {
-        return ResponseEntity.ok(userRepository.findById(userId));
+        User user = userRepository.findById(userId);
+        user.setPathToPhoto(photoStorageService.getSignedUrl(user.getPathToPhoto()));
+        return ResponseEntity.ok(user);
     }
     public ResponseEntity<?> changeDescription(long userId, String description) {
         User mongoUser = userRepository.findById(userId);

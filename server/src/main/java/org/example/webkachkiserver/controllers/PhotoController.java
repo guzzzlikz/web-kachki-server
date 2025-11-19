@@ -40,11 +40,6 @@ public class PhotoController {
             return ResponseEntity.internalServerError().body("Upload failed: " + e.getMessage());
         }
     }
-
-    @GetMapping("/{userId}/user")
-    public User getUser(@PathVariable long userId) {
-        return photoStorageService.getUser(userId);
-    }
     @GetMapping("/{userId}/photo")
     public ResponseEntity<?> getUrl(@PathVariable long userId) {
         return photoStorageService.getUrl(userId);
