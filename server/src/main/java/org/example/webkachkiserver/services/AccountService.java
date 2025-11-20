@@ -22,7 +22,9 @@ public class AccountService {
 
     public ResponseEntity<?> getUser(long userId) {
         User user = userRepository.findById(userId);
-        user.setPathToPhoto(photoStorageService.getSignedUrl(user.getPathToPhoto()));
+        if (user.getPathToPhoto() != null) {
+            user.setPathToPhoto(photoStorageService.getSignedUrl(user.getPathToPhoto()));
+        }
         return ResponseEntity.ok(user);
     }
     public ResponseEntity<?> changeDescription(long userId, String description) {
