@@ -65,6 +65,22 @@ public class VideoStorageService {
                         Storage.SignUrlOption.withContentType());
         return signedUrl.toString();
     }
+    public String generateUrl(String type, int shortsId) {
+        log.info("Storage credentials: {}", storage.getOptions().getCredentials());
+        String name = shortsId + ".mp4";
+        String blobName = "videos/shorts" + name;
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, blobName)
+                .setContentType(type)
+                .build();
+        Map<String, String> params = new HashMap<>();
+        params.put("uploadType", "resumable");
+        URL signedUrl = storage.getOptions()
+                .getService()
+                .signUrl(blobInfo, 15, TimeUnit.MINUTES, Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+                        Storage.SignUrlOption.withV4Signature(),
+                        Storage.SignUrlOption.withContentType());
+        return signedUrl.toString();
+    }
 
     public String getSignedUrl(String objectName) {
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, objectName).build();
