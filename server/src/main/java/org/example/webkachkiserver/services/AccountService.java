@@ -67,4 +67,23 @@ public class AccountService {
         userRepository.save(mongoUser);
         return ResponseEntity.ok(mongoUser.getContacts().getTelegramUrl());
     }
+
+    public ResponseEntity<?> changeWeight(long userId, double weight) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.setWeight(weight);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getWeight());
+    }
+    public ResponseEntity<?> changeAge(long userId, int age) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.setAge(age);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getWeight());
+    }
+    public ResponseEntity<?> changeHeight(long userId, double height) {
+        User mongoUser = userRepository.findById(userId);
+        mongoUser.setHeight(height);
+        userRepository.save(mongoUser);
+        return ResponseEntity.ok(mongoUser.getWeight());
+    }
 }

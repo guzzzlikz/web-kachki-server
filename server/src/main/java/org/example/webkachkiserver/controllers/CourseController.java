@@ -53,5 +53,8 @@ public class CourseController {
     public ResponseEntity<?> getCoursesForIndex() {
         return courseService.getCoursesForIndex();
     }
-
+    @GetMapping("/{userId}/custom")
+    public ResponseEntity<?> getCustomCourses(@PathVariable long userId) {
+        return courseService.getCustomCourses(userId);
+    }
 }

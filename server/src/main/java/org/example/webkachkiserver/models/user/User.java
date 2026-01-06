@@ -21,6 +21,9 @@ public class User {
     private Contacts contacts;
     private double rating;
     private int rates;
+    private double weight;
+    private int age;
+    private double height;
 
     public long getId() {
         return id;

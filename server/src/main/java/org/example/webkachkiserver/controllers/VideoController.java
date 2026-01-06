@@ -43,11 +43,6 @@ public class VideoController {
         String gcsPath = videoStorageService.generateUrl(data.type, courseId);
         return ResponseEntity.ok(gcsPath);
     }
-    @PostMapping("/{shortsId}/generateUrl")
-    public ResponseEntity<?> generateUrl(@PathVariable int shortsId, @RequestBody FileData data) {
-        String gcsPath = videoStorageService.generateUrl(data.type, shortsId);
-        return ResponseEntity.ok(gcsPath);
-    }
 
     @PostMapping("/{courseId}/{lessonId}/finish")
     public ResponseEntity<?> finishVideo(@PathVariable long courseId, @PathVariable long lessonId) {

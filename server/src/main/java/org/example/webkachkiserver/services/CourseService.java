@@ -100,4 +100,22 @@ public class CourseService {
         });
         return ResponseEntity.ok(courses);
     }
+
+    public ResponseEntity<?> getCustomCourses(long userId) {
+        User mongoUser = userRepository.findById(userId);
+        List<Course> output = new ArrayList<>();
+        int i = 3;
+        while (output.size() < 10) {
+            List<Course> check = courseRepository.findAll(Pageable.ofSize(i)).stream().toList();
+            for (Course course : check) {
+                if ((mongoUser.getWeight() > course.getMinWeight() && mongoUser.getWeight() < course.getMaxWeight())
+                || (mongoUser.getHeight() > course.getMinHeight() && mongoUser.getHeight() < course.getMaxHeight())
+                || (mongoUser.getAge() > course.getMinAge() && mongoUser.getAge() < course.getMaxAge())) {
+                    output.add(course);
+                }
+            }
+            i += 3;
+        }
+        return ResponseEntity.ok(output);
+    }
 }

@@ -24,6 +24,12 @@ public class Course {
     private String pathToPreviewPhoto;
     private double rating;
     private int rates;
+    private double minWeight;
+    private double maxWeight;
+    private int minAge;
+    private int maxAge;
+    private double minHeight;
+    private double maxHeight;
 
     public String getTitle() {
         return title;

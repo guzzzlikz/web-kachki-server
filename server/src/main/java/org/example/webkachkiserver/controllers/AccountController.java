@@ -38,8 +38,21 @@ public class AccountController {
     @PostMapping("{userId}/linked")
     public ResponseEntity<?> changedLinkedIn(@PathVariable long userId, @RequestParam String linkedInUrl) {
         return accountService.changeLinkedIn(userId, linkedInUrl);
-    }@PostMapping("{userId}/telegram")
+    }
+    @PostMapping("{userId}/telegram")
     public ResponseEntity<?> changeTelegram(@PathVariable long userId, @RequestParam String telegramUrl) {
         return accountService.changeTelegram(userId, telegramUrl);
+    }
+    @PostMapping("{userId}/weight")
+    public ResponseEntity<?> changeWeight(@PathVariable long userId, @RequestParam double weight) {
+        return accountService.changeWeight(userId, weight);
+    }
+    @PostMapping("{userId}/age")
+    public ResponseEntity<?> changeAge(@PathVariable long userId, @RequestParam int age) {
+        return accountService.changeAge(userId, age);
+    }
+    @PostMapping("{userId}/height")
+    public ResponseEntity<?> changeHeight(@PathVariable long userId, @RequestParam double height) {
+        return accountService.changeHeight(userId, height);
     }
 }
